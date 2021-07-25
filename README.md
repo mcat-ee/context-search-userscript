@@ -3,6 +3,12 @@ The intent of the included code is to display a search link when arbitrary text 
 
 ![The code in action](/example/screenshots/in_action.png)
 
+When a selected passage of text is selected, the script will create a small div below the selection. This div will display the select, and will also display a link labeled 'Go'. The 'Go' link is customisable and follows the following pattern:
+
+`{domain}.{tld}/{searchStub}?{queryKey}={selectedText}`
+
+The parameters `searchStub` and `queryKey` can be set in selectSearchScript.js - the others are implied by the browser and the selected text.
+
 The script is intended to be used as a part of a userscript, an example will come in the near future.
 
 [Example Link](https://mcat-ee.github.io/context-search-example/), with the first chapter of Cat's Cradle, by Kurt Vonnegut as the corpus
