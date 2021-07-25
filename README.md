@@ -1,5 +1,5 @@
 # context-search-userscript
-The intent of the included code is to display a search link when arbitrary text is selected on a webpage.
+The intent of the included code is to display a search link when arbitrary text is selected on a webpage. This could be used to augment the use of third party sites search functionality, or at least to reduce some `ctrl-c`s.
 
 ![The code in action](/example/screenshots/in_action.png)
 
