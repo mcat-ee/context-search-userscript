@@ -7,38 +7,50 @@
 
     <body>
         <h1 id="displayQueryStringHere"></h1>
-        <pre id="selectableContent" >
-            THE DAY THE WORLD ENDED
-
-            CALL ME JONAH. My parents did, or nearly did. They called me John.
-          
-            Jonah--John--if I had been a Sam, I would have been a Jonah still--not because I have been unlucky for others, but because somebody or something has compelled me to be certain places at certain times, without fail. Conveyances and motives, both conventional and bizarre, have been provided. And, according to plan, at each appointed second, at each appointed place this Jonah was there.
-          
-            Listen:
-          
-            When I was a younger man--two wives ago, 250,000 cigarettes ago, 3,000 quarts of booze ago ...
-          
-            When I was a much younger man, I began to collect material for a book to be called The Day the World Ended.
-          
-            The book was to be factual.
-          
-            The book was to be an account of what important Americans had done on the day when the first atomic bomb was dropped on Hiroshima, Japan.
-          
-            It was to be a Christian book. I was a Christian then.
-          
-            I am a Bokononist now.
-          
-            I would have been a Bokononist then, if there had been anyone to teach me the bittersweet lies of Bokonon. But Bokononism was unknown beyond the gravel beaches and coral knives that ring this little island in the Caribbean Sea, the Republic of San Lorenzo.
-          
-            We Bokononists believe that humanity is organized into teams, teams that d
-          o God's Will without ever discovering what they are doing. Such a team is called a karass by Bokonon, and the instrument, the kan-kan, that brought me into my own particular karass was the book I never finished, the book to be called The Day the World Ended.
-        </pre>
+        <div id="selectableContent" >
+            h
+        </div>
         <script>
             var queryStringDisplayElement = document.getElementById("displayQueryStringHere");
             const params = new URLSearchParams(window.location.search)
             var searchValue = params.get("search");
             if(searchValue != null && searchValue != undefined) {
                 queryStringDisplayElement.innerHTML = searchValue;
+            }
+
+            //okay let's construct this search ui component
+            var searchContainer = document.createElement("div");
+            searchContainer.style.display = "flex";
+            searchContainer.style.flexDirection = "row";
+            searchContainer.style.position = "fixed";
+            searchContainer.style.top = 0;
+            searchContainer.style.right = 0;
+
+            var resultsContainer = document.createElement("div");
+            searchContainer.appendChild(resultsContainer);
+
+            var searchInput = document.createElement("input");
+            searchInput.type = "text";
+            searchInput.placeholder = "regex here";
+
+            searchContainer.appendChild(searchInput);
+
+            document.body.appendChild(searchContainer)
+
+
+            const input = document.querySelector('input');
+
+            input.addEventListener('input', updateValue);
+
+            function updateValue(e) {
+    //            log.textContent = e.target.value;
+                var pageText = document.documentElement.innerHTML;
+                var rep_term = "test";
+ 
+                var rep_regex = new RegExp(e.target.value, "gi");
+                
+                document.documentElement.innerHTML = document.documentElement.innerHTML.replace(rep_regex,"<span>TEST</span>");
+                console.log(e.target.value);
             }
         </script>
     </body>
