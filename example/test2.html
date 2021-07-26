@@ -5,19 +5,14 @@
             <div id="inner">
                 This text is inside the nest
             </div>
-
         </div>
-        <button id="cleanup">Cleanup</button>
+        <!-- <button id="cleanup">Cleanup</button> -->
         <script>
-
             function highlightButtonHandler(e) {
-                // console.log(e);
-                // return;
                 var textString = document.getElementById("universalRegexInput").value;
 
                 if(window.highLightedText != undefined) {
                     cleanupRegex(undefined);
-                
                 }
                 window.highLightedText = textString;
                 highlightText(textString);
@@ -25,7 +20,6 @@
 
 
             function cleanupRegex (e) {
-                console.log(window.highLightedText);
                 var all = document.getElementsByTagName("*");
                 var editCount = 0;
                 for (var i=0; i < all.length; i++) {
@@ -49,71 +43,61 @@
 
             function highlightText(stringToHighlight) {
                 var inner = document.getElementById("inner");
-                // while()
-                // var child = inner.childNodes[0];
-                // while( (child = child.nextSibling) != null ){
-                //     // x++
-                // } 
+                // console.log("Children nodes:" ,inner.childNodes.length);
+                // console.log("Highlight target:", stringToHighlight);
 
-                console.log("Children nodes:" ,inner.childNodes.length);
-                console.log(inner.childNodes[0].nodeValue);
-                console.log(stringToHighlight);
-                var splitIndex = inner.childNodes[0].nodeValue.indexOf(stringToHighlight);
-                if(splitIndex != -1) {
-                    var nextText = inner.childNodes[0].splitText(
-                        splitIndex
-                    );
-                    nextText.nodeValue = nextText.nodeValue.replace(stringToHighlight,"")
-                    var newEl = document.createElement("p");
-                    newEl.style.display = "inline";
-                    newEl.universalRegexToken = true;
-                    newEl.style.backgroundColor = "#58d68d";
-                    newEl.innerText = stringToHighlight ;
-                    inner.insertBefore(newEl,nextText);
-                } else {
-                    console.log("Couldn't find...");
-                }
+                var child = inner.childNodes[0];
+                var x= 0;
+                do{
+                    x++
+                    if(child.nodeValue == undefined || child.nodeValue == null) {
+                        continue;
+                    }
+                    var splitIndex = child.nodeValue.indexOf(stringToHighlight);
+                    if(splitIndex != -1) {
+                        var nextText = child.splitText(
+                            splitIndex
+                        );
+                        nextText.nodeValue = nextText.nodeValue.replace(stringToHighlight,"")
+                        var newEl = document.createElement("p");
+                        newEl.style.display = "inline";
+                        newEl.universalRegexToken = true;
+                        newEl.style.backgroundColor = "#58d68d";
+                        newEl.innerText = stringToHighlight ;
+                        inner.insertBefore(newEl,nextText);
+                    } else {
+                        console.log("Couldn't find...");
+                    }
+                } while( (child = child.nextSibling) != null );
                 window.highLightedText = stringToHighlight;
-
             }
 
-            var butt = document.getElementById("cleanup");
-            butt.onclick = highlightButtonHandler;
+
+            // var butt = document.getElementById("cleanup");
+            // butt.onclick = highlightButtonHandler;
 
 
             var searchContainer = document.createElement("div");
-        searchContainer.style.display = "flex";
-        searchContainer.style.flexDirection = "row";
-        searchContainer.style.position = "fixed";
-        searchContainer.style.top = 0;
-        searchContainer.style.right = 0;
-        searchContainer.id = "universalRegexContainer";
+            searchContainer.style.display = "flex";
+            searchContainer.style.flexDirection = "row";
+            searchContainer.style.position = "fixed";
+            searchContainer.style.top = 0;
+            searchContainer.style.right = 0;
+            searchContainer.id = "universalRegexContainer";
+            var resultsContainer = document.createElement("div");
+            searchContainer.appendChild(resultsContainer);
+            var searchInput = document.createElement("input");
+            searchInput.type = "text";
+            searchInput.id = "universalRegexInput"
+            searchInput.placeholder = "regex here";
+            searchContainer.appendChild(searchInput);
+            var regexSubmitButton = document.createElement("button");
+            regexSubmitButton.innerHTML = "Search";
+            regexSubmitButton.id = "regexSubmitButton";
+            searchContainer.appendChild(regexSubmitButton);
 
-        var resultsContainer = document.createElement("div");
-        searchContainer.appendChild(resultsContainer);
-
-        var searchInput = document.createElement("input");
-        searchInput.type = "text";
-        searchInput.id = "universalRegexInput"
-        searchInput.placeholder = "regex here";
-
-        searchContainer.appendChild(searchInput);
-
-        var regexSubmitButton = document.createElement("button");
-        regexSubmitButton.innerHTML = "Search";
-        regexSubmitButton.id = "regexSubmitButton";
-        searchContainer.appendChild(regexSubmitButton);
-
-        document.body.appendChild(searchContainer)
-
-
-        // const input = document.querySelector('input');
-        // const input = document.getElementById("regexSubmitButton");
-        regexSubmitButton.addEventListener('click', highlightButtonHandler);
-
-        function updateValue(e) {
-            alert("Search");
-        }
+            document.body.appendChild(searchContainer)
+            regexSubmitButton.addEventListener('click', highlightButtonHandler);
         </script>
     </body>
 </html>
