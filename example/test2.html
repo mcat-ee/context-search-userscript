@@ -1,0 +1,62 @@
+<html>
+    <body>
+        <div id="outer">
+            This text is outside the nest
+            <div id="inner">
+                This text is inside the nest
+            </div>
+
+        </div>
+        <button id="cleanup">Cleanup</button>
+        <script>
+
+            function buttonHandler(e) {
+                if(window.highLightedText == undefined) {
+                    window.highLightedText = "text"
+                    highlightText();
+                } else {
+                    cleanupRegex(undefined);
+                }
+            }
+
+
+            function cleanupRegex (e) {
+                console.log(window.highLightedText);
+                var all = document.getElementsByTagName("*");
+
+                for (var i=0; i < all.length; i++) {
+                    if(all[i].universalRegexToken != undefined) {
+                        var x = 0;
+                        var child = all[i];
+                        while( (child = child.previousSibling) != null ){
+                            x++
+                        } 
+                        var nextElement = all[i].nextSibling;
+                        nextElement.nodeValue = highLightedText + nextElement.nodeValue;
+                        var parentNode = all[i].parentNode;
+                        all[i].remove();
+
+                        parentNode.normalize();
+                    }
+                }
+                window.highLightedText = undefined;
+            }
+
+
+            function highlightText(stringToHighlight) {
+                var inner = document.getElementById("inner");
+                var nextText = inner.childNodes[0].splitText(inner.childNodes[0].nodeValue.indexOf("text"));
+                nextText.nodeValue = nextText.nodeValue.replace(window.highLightedText,"")
+                var newEl = document.createElement("p");
+                newEl.style.display = "inline";
+                newEl.universalRegexToken = true;
+                newEl.style.backgroundColor = "lightgrey";
+                newEl.innerText = " " + window.highLightedText + " ";
+                inner.insertBefore(newEl,nextText);
+            }
+
+            var butt = document.getElementById("cleanup");
+            butt.onclick = buttonHandler;
+        </script>
+    </body>
+</html>
